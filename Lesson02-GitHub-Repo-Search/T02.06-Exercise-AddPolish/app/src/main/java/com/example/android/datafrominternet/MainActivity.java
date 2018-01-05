@@ -78,19 +78,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // TODO (14) Create a method called showJsonDataView to show the data and hide the error
+    // COMPLETED (14) Create a method called showJsonDataView to show the data and hide the error
     private void showJsonDataView(){
-
+    mSearchResultsTextView.setVisibility(0);
+    mErrorTextView.setVisibility(4);
     }
 
-    // TODO (15) Create a method called showErrorMessage to show the error and hide the data
+    // COMPLETED (15) Create a method called showErrorMessage to show the error and hide the data
     private void showErrorMessage(){
-
+        mSearchResultsTextView.setVisibility(4);
+        mErrorTextView.setVisibility(0);
     }
 
     public class GithubQueryTask extends AsyncTask<URL, Void, String> {
 
-        // TODO (26) Override onPreExecute to set the loading indicator to visible
+        // COMPLETED (26) Override onPreExecute to set the loading indicator to visible
+        @Override
+        protected void onPreExecute(){
+            mProgressBar.setVisibility(0);
+        }
 
         @Override
         protected String doInBackground(URL... params) {
@@ -106,12 +112,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String githubSearchResults) {
-            // TODO (27) As soon as the loading is complete, hide the loading indicator
+            // COMPLETED (27) As soon as the loading is complete, hide the loading indicator
+            mProgressBar.setVisibility(4);
             if (githubSearchResults != null && !githubSearchResults.equals("")) {
-                // TODO (17) Call showJsonDataView if we have valid, non-null results
+                // COMPLETED (17) Call showJsonDataView if we have valid, non-null results
+                showJsonDataView();
                 mSearchResultsTextView.setText(githubSearchResults);
             }
             // TODO (16) Call showErrorMessage if the result is null in onPostExecute
+            else{
+                showErrorMessage();
+            }
         }
     }
 
